@@ -50,21 +50,19 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyCdFV_seLmQnHYM4x-yXRXHIuetFxkaK1M',
-    appId: '1:197005284103:android:a47031decb1504d42ceba2',
-    messagingSenderId: '197005284103',
-    projectId: 'uber-eats-e6fa7',
-    databaseURL: 'https://uber-eats-e6fa7-default-rtdb.firebaseio.com',
-    storageBucket: 'uber-eats-e6fa7.appspot.com',
+    apiKey: 'AIzaSyCkJ_XuG6UB8mgUxy3QGtk3mbgghMhfgrg',
+    appId: '1:113142352242:android:dd6df30989af5d60e175eb',
+    messagingSenderId: '113142352242',
+    projectId: 'starling-d419a',
+    storageBucket: 'starling-d419a.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyCI36gLdCz8pqXS0NgXCsMpstXqRY1jDTA',
-    appId: '1:197005284103:ios:546c231549f9ff272ceba2',
-    messagingSenderId: '197005284103',
-    projectId: 'uber-eats-e6fa7',
-    databaseURL: 'https://uber-eats-e6fa7-default-rtdb.firebaseio.com',
-    storageBucket: 'uber-eats-e6fa7.appspot.com',
-    iosBundleId: 'com.example.ubereatsdriver',
+    apiKey: 'AIzaSyAHpgZ2Ot7cXBqDWIjAVJxunJLKyzYDUyk',
+    appId: '1:113142352242:ios:70260a764ee38e07e175eb',
+    messagingSenderId: '113142352242',
+    projectId: 'starling-d419a',
+    storageBucket: 'starling-d419a.appspot.com',
+    iosBundleId: 'com.example.ubereatsresturant',
   );
 }

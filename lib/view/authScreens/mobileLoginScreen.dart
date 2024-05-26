@@ -16,7 +16,7 @@ class MobileLoginScreen extends StatefulWidget {
 }
 
 class _MobileLoginScreenState extends State<MobileLoginScreen> {
-  String selectedCountry = '+91';
+  String selectedCountry = '+62';
   TextEditingController mobileController = TextEditingController();
   bool receiveOTPButtonPressed = false;
   @override

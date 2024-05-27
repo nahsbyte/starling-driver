@@ -1,13 +1,15 @@
 // ignore_for_file: use_build_context_synchronously
 import 'dart:developer';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 import 'package:ubereatsdriver/constants/constant.dart';
 import 'package:ubereatsdriver/controller/provider/authProvider/mobileAuthProvider.dart';
+import 'package:ubereatsdriver/controller/services/locationServices/locationServices.dart';
 import 'package:ubereatsdriver/controller/services/profileServices/profileServices.dart';
-import 'package:ubereatsdriver/controller/services/pushNotificationServices/pushNotificationServices.dart';
 import 'package:ubereatsdriver/view/authScreens/mobileLoginScreen.dart';
 import 'package:ubereatsdriver/view/authScreens/otpScreen.dart';
 import 'package:ubereatsdriver/view/bottomNavigationBar/bottomNavigationBar.dart';
@@ -80,11 +82,14 @@ class MobileAuthServices {
   }
 
   static checkUserRegistration({required BuildContext context}) async {
+    LocationServices locationServices = Get.put(LocationServices());
+
     try {
+      await locationServices.getCurrentLocation();
+      
       bool userIsRegistered = await ProfileServices.checkForRegistration();
 
       if (userIsRegistered) {
-        
         Navigator.pushAndRemoveUntil(
           context,
           PageTransition(

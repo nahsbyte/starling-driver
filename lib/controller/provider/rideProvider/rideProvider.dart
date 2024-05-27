@@ -4,6 +4,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:ubereatsdriver/controller/services/directionServices/directionServices.dart';
 import 'package:ubereatsdriver/controller/services/locationServices/locationServices.dart';
@@ -34,6 +35,7 @@ class RideProvider extends ChangeNotifier {
   Polyline? polylineTowardsDelivery;
   Polyline? polylineTowardsResturant;
   LatLng? resturantLoaction;
+  final LocationServices locationServices = Get.find();
 
   updateOrderData(FoodOrderModel data) {
     orderData = data;
@@ -135,8 +137,9 @@ class RideProvider extends ChangeNotifier {
   }
 
   updateMarker(BuildContext context) async {
+
     deliveryMarker = Set<Marker>();
-    Position crrPositon = await LocationServices.getCurretnLocation();
+    Position crrPositon = await locationServices.getCurrentLocation();
     FoodOrderModel itemOrderData = orderData!;
     LatLng resturantLocation = LatLng(
         itemOrderData.resturantDetails.address!.latitude!,

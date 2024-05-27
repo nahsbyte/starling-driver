@@ -1,12 +1,13 @@
 // ignore_for_file: use_build_context_synchronously
 
-import 'dart:async';
 import 'dart:convert';
+
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_swipe_button/flutter_swipe_button.dart';
-import 'package:geolocator/geolocator.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:get/get.dart';
+// import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 import 'package:ubereatsdriver/constants/constant.dart';
@@ -27,14 +28,18 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  Completer<GoogleMapController> googleMapController = Completer();
-  GoogleMapController? mapController;
-  CameraPosition initialCameraPosition = const CameraPosition(
-    target: LatLng(37.4, -122),
-    zoom: 14,
-  );
+  // Completer<GoogleMapController> googleMapController = Completer();
+  // GoogleMapController? mapController;
+  // CameraPosition initialCameraPosition = const CameraPosition(
+  //   target: LatLng(37.4, -122),
+  //   zoom: 14,
+  // );
+
+  final LocationServices locationServices = Get.find();
+
   static DatabaseReference databaseReference =
       FirebaseDatabase.instance.ref().child('Driver/${auth.currentUser!.uid}');
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -224,7 +229,38 @@ class _HomeScreenState extends State<HomeScreen> {
                                   OrderServices.orderStatus(0)) {
                                 return Expanded(child: Consumer<RideProvider>(
                                     builder: (context, rideProvider, child) {
-                                  return GoogleMap(
+                                  return FlutterMap(
+                                    options: MapOptions(
+                                      initialCenter:
+                                          locationServices.getCurrentLatLng(),
+                                      initialZoom: 15.0,
+                                    ),
+                                    children: [
+                                      TileLayer(
+                                        urlTemplate:
+                                            "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+                                        subdomains: ['a', 'b', 'c'],
+                                      ),
+                                      MarkerLayer(
+                                        markers: [
+                                          Marker(
+                                            width: 30.0,
+                                            height: 30.0,
+                                            point: locationServices
+                                                .getCurrentLatLng(),
+                                            child: Container(
+                                              child: const Icon(
+                                                Icons.my_location,
+                                                color: Colors.red,
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  );
+
+                                  /*GoogleMap(
                                     initialCameraPosition:
                                         initialCameraPosition,
                                     mapType: MapType.normal,
@@ -255,12 +291,43 @@ class _HomeScreenState extends State<HomeScreen> {
                                           CameraUpdate.newCameraPosition(
                                               cameraPosition));
                                     },
-                                  );
+                                  );*/
                                 }));
                               } else {
                                 return Expanded(child: Consumer<RideProvider>(
                                     builder: (context, rideProvider, child) {
-                                  return GoogleMap(
+                                  return FlutterMap(
+                                    options: MapOptions(
+                                      initialCenter:
+                                          locationServices.getCurrentLatLng(),
+                                      initialZoom: 15.0,
+                                    ),
+                                    children: [
+                                      TileLayer(
+                                        urlTemplate:
+                                            "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+                                        subdomains: ['a', 'b', 'c'],
+                                      ),
+                                      MarkerLayer(
+                                        markers: [
+                                          Marker(
+                                            width: 30.0,
+                                            height: 30.0,
+                                            point: locationServices
+                                                .getCurrentLatLng(),
+                                            child: Container(
+                                              child: const Icon(
+                                                Icons.my_location,
+                                                color: Colors.red,
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  );
+
+                                  /*GoogleMap(
                                     initialCameraPosition:
                                         initialCameraPosition,
                                     mapType: MapType.normal,
@@ -277,7 +344,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       mapController = controller;
                                       Position crrPositon =
                                           await LocationServices
-                                              .getCurretnLocation();
+                                              .getCurrentLocation();
                                       LatLng crrLatLng = LatLng(
                                         crrPositon.latitude,
                                         crrPositon.longitude,
@@ -291,7 +358,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                           CameraUpdate.newCameraPosition(
                                               cameraPosition));
                                     },
-                                  );
+                                  );*/
                                 }));
                               }
                             });
@@ -303,7 +370,35 @@ class _HomeScreenState extends State<HomeScreen> {
                         });
                   } else {
                     return Expanded(
-                      child: GoogleMap(
+                      child: FlutterMap(
+                        options: MapOptions(
+                          initialCenter: locationServices.getCurrentLatLng(),
+                          initialZoom: 15.0,
+                        ),
+                        children: [
+                          TileLayer(
+                            urlTemplate:
+                                "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+                            subdomains: ['a', 'b', 'c'],
+                          ),
+                          MarkerLayer(
+                            markers: [
+                              Marker(
+                                width: 30.0,
+                                height: 30.0,
+                                point: locationServices.getCurrentLatLng(),
+                                child: Container(
+                                  child: const Icon(
+                                    Icons.my_location,
+                                    color: Colors.red,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                      /*GoogleMap(
                         initialCameraPosition: initialCameraPosition,
                         mapType: MapType.normal,
                         myLocationButtonEnabled: true,
@@ -314,7 +409,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           googleMapController.complete(controller);
                           mapController = controller;
                           Position crrPositon =
-                              await LocationServices.getCurretnLocation();
+                              await LocationServices.getCurrentLocation();
                           LatLng crrLatLng = LatLng(
                             crrPositon.latitude,
                             crrPositon.longitude,
@@ -326,7 +421,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           mapController!.animateCamera(
                               CameraUpdate.newCameraPosition(cameraPosition));
                         },
-                      ),
+                      ),*/
                     );
                   }
                 } else {

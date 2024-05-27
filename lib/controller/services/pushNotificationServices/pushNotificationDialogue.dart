@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_swipe_button/flutter_swipe_button.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
@@ -18,7 +19,10 @@ import 'package:ubereatsdriver/utils/colors.dart';
 import 'package:ubereatsdriver/utils/textStyles.dart';
 
 class PushNotificationDialogue {
+
   static deliveryRequestDialogue(String orderID, BuildContext context) async {
+    final LocationServices locationServices = Get.find();
+
     DeliveryPartnerModel deliveryPartnerData =
         await ProfileServices.getDeliveryPartnerProfileData();
     if (deliveryPartnerData.activeDeliveryRequestID == null) {
@@ -107,7 +111,7 @@ class PushNotificationDialogue {
                         elevationTrack: 2,
                         onSwipe: () async {
                           Position deliveryGuyPosition =
-                              await LocationServices.getCurretnLocation();
+                              await locationServices.getCurrentLocation();
                           LatLng deliveryGuy = LatLng(
                             deliveryGuyPosition.latitude,
                             deliveryGuyPosition.longitude,

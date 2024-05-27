@@ -4,6 +4,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_geofire/flutter_geofire.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:ubereatsdriver/constants/constant.dart';
 import 'package:ubereatsdriver/controller/provider/rideProvider/rideProvider.dart';
@@ -15,7 +16,9 @@ class GeofireServices {
       .child('Driver/${auth.currentUser!.uid}/driverStatus');
 
   static goOnline() async {
-    Position currentPosition = await LocationServices.getCurretnLocation();
+    final LocationServices locationServices = Get.find();
+
+    Position currentPosition = await locationServices.getCurrentLocation();
     Geofire.initialize('OnlineDrivers');
     Geofire.setLocation(
       auth.currentUser!.uid,

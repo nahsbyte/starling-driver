@@ -34,7 +34,10 @@ dependencies:
   flutter_swipe_button: ^2.1.1+1
   firebase_messaging: ^14.7.10
   just_audio: ^0.9.36
-  flutter_polyline_points: ^1.0.0
+  flutter_polyline_points: 2.0.0
+  flutter_map: ^6.1.0
+  get: 4.6.6
+  http: 1.2.0
 
 dev_dependencies:
   flutter_test:
